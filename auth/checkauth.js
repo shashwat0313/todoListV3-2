@@ -11,7 +11,7 @@ let answer = {
 }
 
 module.exports = async function checkAuth(req) {
-    const result = await fetch(`${baseUrl}/accounts/googlelogin/querylogin`, {
+    const result = await fetch(`accounts/googlelogin/querylogin`, {
         headers: req.headers
     }).then(response =>
         response.json().then((data)=>{

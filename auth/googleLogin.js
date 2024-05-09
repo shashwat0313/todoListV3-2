@@ -123,8 +123,8 @@ passport.use('custom', new customStrategy(
 router.post('/login', (req, res, next) => {
     console.log("/googlelogin/login post hit");
     passport.authenticate('google-one-tap', {
-        failureRedirect: 'accounts/googlelogin/login',
-        successRedirect: '/'
+        failureRedirect: 'accounts/login',
+        successRedirect: '/',
     })(req, res, next)
 })
 
