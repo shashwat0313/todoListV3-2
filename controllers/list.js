@@ -17,6 +17,7 @@ router.get('/:listName', (req, res) => {
     const listName = req.params.listName
 
     checkauth(req).then((result) => {
+        console.log("checkauth res<listname get>=", result);
         if (result.isLoggedIn) {
             User.findOne({ email: result.email }).populate('Lists').then((user) => {
                 console.log("user found by listget", user);
@@ -41,6 +42,9 @@ router.get('/:listName', (req, res) => {
                     })
                 }
             })
+        }
+        else{
+            console.log("not authenticated");
         }
     })
 
@@ -69,6 +73,9 @@ router.post('/:listName', (req, res) => {
                             })
                         })
                     })
+                }
+                else{
+                    console.log("could not find list");
                 }
             })
         }
