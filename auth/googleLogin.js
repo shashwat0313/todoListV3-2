@@ -38,7 +38,7 @@ userSchema.plugin(findOrCreate)
 
 const User = MongooseConnection.model('User', userSchema)
 
-const sessionStore = mongostore.create({ mongoUrl: `mongodb://127.0.0.1:27017/${DB_NAME}`, collectionName: 'sessions' })
+const sessionStore = mongostore.create({ mongoUrl: `${mongoCloudAddress}/${DB_NAME}`, collectionName: 'sessions' })
 
 router.use(session({
     secret: "mysecrethahaha",
