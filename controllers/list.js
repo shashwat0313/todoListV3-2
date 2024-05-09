@@ -17,8 +17,8 @@ const passport = require('passport')
 
 router.get('/:listName', (req, res) => {
     const listName = req.params.listName
-    const isAuthenticated = req.isAuthenticated();
-    console.log("result of isAuthenticated=", isAuthenticated);
+    // const isAuthenticated = req.isAuthenticated();
+    // console.log("result of isAuthenticated=", isAuthenticated);
     checkauth(req).then((result) => {
         console.log("checkauth res<listname get>=", result);
         if (result.isLoggedIn) {
