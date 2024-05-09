@@ -34,8 +34,10 @@ console.log("authquery=", authQueryUrl);
 module.exports = async function f(req){
     console.log("called checkauth2\nnow, will make a fetch call")
     const result = await fetch(authQueryUrl, {headers:req.headers}).then((response)=>{
-        console.log("response from fetch:", response);
-        return response    
+        response.json().then((data)=>{
+            console.log("response from fetch:", data);
+            return data;
+        })
     }).catch((err)=>{
         console.log("error in checkauth/fetch:", err);
         return answer
