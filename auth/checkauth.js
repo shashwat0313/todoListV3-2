@@ -21,6 +21,7 @@ module.exports = async function checkAuth(req) {
         headers: req.headers
     }).then((response) =>
         response.json().then((data)=>{
+            console.log("req=",req);
             console.log("data=",data);
             return data;
         }
