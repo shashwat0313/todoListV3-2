@@ -15,18 +15,29 @@ let answer = {
 const authQueryUrl = `${baseUrl}/accounts/googlelogin/querylogin`;
 console.log("authquery=", authQueryUrl);
 
-module.exports = async function checkAuth(req) {
-    console.log("autqueryurl=", authQueryUrl);
-    const result = await fetch(authQueryUrl, { 
-        headers: req.headers
-    }).then(response =>
-        response.json().then((data)=>{
-            console.log("data=",data);
-            return data;
-        }
-    )).catch((err)=>{
-        return answer;
-    })
+// module.exports = async function checkAuth(req) {
+//     console.log("autqueryurl=", authQueryUrl);
+//     const result = await fetch(authQueryUrl, { 
+//         headers: req.headers
+//     }).then((response) =>
+//         response.json().then((data)=>{
+//             console.log("data=",data);
+//             return data;
+//         }
+//     )).catch((err)=>{
+//         return answer;
+//     })
 
-    return result;
+//     return result;
+// }
+
+module.exports = async function f(req){
+    console.log("called checkauth2\nnow, will make a fetch call")
+    const result = await fetch(authQueryUrl, {headers:req.headers}).then((response)=>{
+        console.log("response from fetch:", response);
+        return response    
+    }).catch((err)=>{
+        console.log("error in checkauth/fetch:", err);
+        return answer
+    })
 }

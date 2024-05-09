@@ -150,6 +150,7 @@ router.get('/test',(req, res)=>{
 
 router.get('/querylogin', (req, res) => {
     console.log("req.user=", req.user);
+    console.log("inside querylogin get route");
     if (req.isAuthenticated()) {
 
         res.json({
