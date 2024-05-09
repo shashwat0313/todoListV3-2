@@ -10,8 +10,12 @@ let answer = {
     email: null
 }
 
+const authQueryUrl = `${baseUrl}/accounts/googlelogin/querylogin`;
+console.log("authquery=", authQueryUrl);
+
 module.exports = async function checkAuth(req) {
-    const result = await fetch(`${baseUrl}/accounts/googlelogin/querylogin`, { 
+    ;
+    const result = await fetch(authQueryUrl, { 
         headers: req.headers
     }).then(response =>
         response.json().then((data)=>{
