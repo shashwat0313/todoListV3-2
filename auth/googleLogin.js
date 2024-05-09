@@ -149,7 +149,9 @@ router.get('/test',(req, res)=>{
 })
 
 router.get('/querylogin', (req, res) => {
+    console.log("req.user=", req.user);
     if (req.isAuthenticated()) {
+
         res.json({
             isLoggedIn: true,
             email: req.user.email
