@@ -52,6 +52,7 @@ router.post('/:listName', (req, res) => {
     console.log("listName=", listName);
     console.log("new task name = ", newTaskName);
     checkauth(req).then((x) => {
+        console.log("checkauth res=", x);
         if (x.isLoggedIn) {
             User.findOne({ email: x.email }).populate("Lists").then((user) => {
                 console.log("user=", user);
@@ -70,6 +71,10 @@ router.post('/:listName', (req, res) => {
                     })
                 }
             })
+        }
+        else{
+            console.log("user not logged in");
+            return res.send("checkauth returned false")
         }
     })
 
