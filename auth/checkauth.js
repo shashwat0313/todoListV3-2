@@ -15,32 +15,32 @@ let answer = {
 const authQueryUrl = `${baseUrl}/accounts/googlelogin/querylogin`;
 console.log("authquery=", authQueryUrl);
 
-// module.exports = async function checkAuth(req) {
-//     console.log("autqueryurl=", authQueryUrl);
-//     const result = await fetch(authQueryUrl, { 
-//         headers: req.headers
-//     }).then((response) =>
-//         response.json().then((data)=>{
-//             console.log("data=",data);
-//             return data;
-//         }
-//     )).catch((err)=>{
-//         return answer;
-//     })
-
-//     return result;
-// }
-
-module.exports = async function f(req){
-    console.log("called checkauth2\nnow, will make a fetch call")
-    const result = await fetch(authQueryUrl, {headers:req.headers}).then((response)=>{
+module.exports = async function checkAuth(req) {
+    console.log("autqueryurl=", authQueryUrl);
+    const result = await fetch(authQueryUrl, { 
+        headers: req.headers
+    }).then((response) =>
         response.json().then((data)=>{
-            console.log("response from fetch:", data);
+            console.log("data=",data);
             return data;
-        })
-    }).catch((err)=>{
-        console.log("error in checkauth/fetch:", err);
-        return answer
+        }
+    )).catch((err)=>{
+        return answer;
     })
-    return result
+
+    return result;
 }
+
+// module.exports = async function f(req){
+//     console.log("called checkauth2\nnow, will make a fetch call")
+//     const result = await fetch(authQueryUrl, {headers:req.headers}).then((response)=>{
+//         response.json().then((data)=>{
+//             console.log("response from fetch:", data);
+//             return data;
+//         })
+//     }).catch((err)=>{
+//         console.log("error in checkauth/fetch:", err);
+//         return answer
+//     })
+//     return result
+// }
