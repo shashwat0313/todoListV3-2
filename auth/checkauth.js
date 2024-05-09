@@ -40,4 +40,5 @@ module.exports = async function f(req){
         console.log("error in checkauth/fetch:", err);
         return answer
     })
+    return result
 }
