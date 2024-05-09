@@ -19,7 +19,8 @@ module.exports = async function checkAuth(req) {
     console.log("autqueryurl=", authQueryUrl);
     // console.log("req=",req);
     const result = await fetch(authQueryUrl, { 
-        headers: req.headers
+        headers: req.headers,
+        credentials: 'include'
     }).then((response) =>
         response.json().then((data)=>{
             console.log("data=",data);
