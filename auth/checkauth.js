@@ -17,11 +17,11 @@ console.log("authquery=", authQueryUrl);
 
 module.exports = async function checkAuth(req) {
     console.log("autqueryurl=", authQueryUrl);
+    // console.log("req=",req);
     const result = await fetch(authQueryUrl, { 
         headers: req.headers
     }).then((response) =>
         response.json().then((data)=>{
-            console.log("req=",req);
             console.log("data=",data);
             return data;
         }

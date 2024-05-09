@@ -58,6 +58,7 @@ router.post('/:listName', (req, res) => {
     const listName = req.params.listName
     console.log("listName=", listName);
     console.log("new task name = ", newTaskName);
+    console.log("req(post)=", req);
     checkauth(req).then((x) => {
         console.log("checkauth res=", x);
         if (x.isLoggedIn) {
