@@ -16,10 +16,11 @@ const User = new mongoose.model('user', userSchema)
 const passport = require('passport')
 
 
-router.get('/:listName/:additem', (req, res)=>{
-    const {listName, additem} = req.params;
-    console.log(req.params);
+router.get('/additem', (req, res)=>{
+    // const {listName} = req.params;
+    // console.log(req.params);
     console.log(req.query);
+    const newTaskName = "";
 })
 
 // request made here to fetch a list or to create and empty list
