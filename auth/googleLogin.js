@@ -18,7 +18,8 @@ const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
 const mongooseEncryption = require('mongoose-encryption')
 
-const db_secret_key = process.env.DB_ENCKEY
+// const db_encryption_key = Buffer.from(process.env.DB_ENCKEY, 'hex')
+// const db_signing_key = Buffer.from(process.env.DB_SIGNING_KEY, 'hex')
 const clientID = process.env.GOOGLE_CLIENT_ID
 const clientSECRET = process.env.GOOGLE_CLIENT_SECRET
 const client = new OAuth2Client(clientID);
@@ -32,7 +33,7 @@ const MongooseConnection = mongoose.createConnection(`${mongoCloudAddress}/${DB_
 
 const userSchema = require('../schemas/User')
 userSchema.plugin(findOrCreate)
-userSchema.plugin(mongooseEncryption, {secret:db_secret_key})
+// userSchema.plugin(mongooseEncryption, {encryptionKey:})
 
 const User = MongooseConnection.model('User', userSchema)
 
