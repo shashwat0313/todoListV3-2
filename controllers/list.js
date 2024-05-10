@@ -35,7 +35,20 @@ router.get('/additem', (req, res)=>{
                 if(list){
                     // found a list
                     console.log("list=", list);
-                    res.redirect('/lists/' + listName);
+                    List.findById(list.id).then((listToBeUpdated)=>{
+                        console.log("this list is to be updated:", listToBeUpdated);
+                        Item.create({Name:newTaskName}).then((newitem)=>{
+                            listToBeUpdated.Items.push(newitem._id);
+                            listToBeUpdated.save().then((updatedList)=>{
+                                // the list should have been updated by now
+                                console.log("updatedlist=", updatedList);
+
+                                // now redirect to the same page for a refresh
+                                res.redirect('/lists/' + listName);
+                            })
+
+                        })
+                    })
                 }
                 else{
                     console.log("some issue with listfind");
