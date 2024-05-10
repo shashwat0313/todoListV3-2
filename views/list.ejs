@@ -13,14 +13,14 @@
     <h1><%=dayvalue%></h1>
   </div>
   <!-- <h3 >Tasks: </h3> -->
-  <form action="/checked" method="post">
+  <form action="/lists/deleteitem" method="get">
 
     <div class="box taskContainer" style="overflow-y:hidden;">
-
+      <input type="hidden" name="listName" value="<%= dayvalue %>">
       <% for( let index = 0; index < taskArray.length; index++ ) { %>
       <div class="item">
         <input id="itemcheckbox" type="checkbox" name="item" onchange="this.form.submit()" value="<%=taskArray[index]%>">
-        <input type="hidden" name="listName" value="<%= routeName %>">
+        <!-- <input type="hidden" name="listName" value="<%= routeName %>"> -->
         <p id="itemtext">
           <%= taskArray[index] %>
         </p>
@@ -28,12 +28,12 @@
       <% } %>
   </form>
   </div>
-
+<!-- will decide a get api to handle addition of tasks to make things simpler -->
   <div class="box addingTask">
-    <form class="addTaskForm" action="<%= routeName %>" method="post" class="item">
+    <form class="addTaskForm" action="/lists/additem" method="get" class="item" id="addtaskform">
 
-      <input class="textbox" type="text" name="task" placeholder="New Task" autocomplete="off">
-      <button type="submit" name="list" value=<%=dayvalue%>>+</button>
+      <input class="textbox" type="text" name="task" placeholder="New Task" autocomplete="off" id="newtaskname">
+      <button type="submit" name="list" value='<%=dayvalue%>'>+</button>
 
     </form>
   </div>
@@ -60,6 +60,10 @@
     z.addEventListener("mouseout", () => {
       z.style.overflowY = 'hidden';
     })
+
+    // will now add scripts to handle form submissions via get
+
+
   </script>
 </body>
 <br>

@@ -16,8 +16,8 @@
         <%= ItemArray[index].ListName %>
       </td>
       <td style="text-align: right; padding-right: 0.8rem;">
-        <form action="/deletelist" method="post">
-          <button name="deletename" type="submit" style="border-radius: 5%; width: auto; font-size: large;" value="<%= ItemArray[index].ListName %>">
+        <form action="/lists/deletelist" method="get">
+          <button name="listName" type="submit" style="border-radius: 5%; width: auto; font-size: large;" value="<%= ItemArray[index].ListName %>">
             Delete
           </button>
           <button type="button" style="border-radius: 5%; width: auto; font-size: large;" onclick=" window.location.href = '/lists/<%= ItemArray[index].ListName %>'">

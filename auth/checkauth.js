@@ -1,5 +1,3 @@
-// TODO : WHEN CALLED, MAKE A FETCH REQUEST
-// WITHIN THE SERVER, AND RETURN, 
 // IF LOGGED IN, THEN THE STATUS OF AUTH AND EMAIL ID
 // ELSE RETURN FALSE AND NULL EMAIL ID
 
@@ -10,12 +8,14 @@ let answer = {
     email: null
 }
 
+const authQueryUrl = `${baseUrl}/accounts/googlelogin/querylogin`;
+
 module.exports = async function checkAuth(req) {
-    const result = await fetch(`${baseUrl}/accounts/googlelogin/querylogin`, {  
-        headers: req.headers
-    }).then(response =>
+    const result = await fetch(authQueryUrl, { 
+        headers: req.headers,
+        credentials: 'include'
+    }).then((response) =>
         response.json().then((data)=>{
-            console.log("data=",data);
             return data;
         }
     )).catch((err)=>{
