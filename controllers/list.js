@@ -27,7 +27,13 @@ router.get('/deletelist', (req, res)=>{
                 const list = lists.find(list => list.ListName === listName);
 
                 if(list){
-
+                    console.log("list found = ", list);
+                    List.findByIdAndRemove({ListName:list.ListName}).then(()=>{
+                        User.findByIdAndUpdate(user._id, { $pull: { Lists: list._id } }).then((updatedUser)=>{
+                            console.log("this is the updated user doc:", updatedUser);
+                            res.redirect('/');
+                        })
+                    })
                 }
                 else{
                     res.send("list not found (deletelist)")
