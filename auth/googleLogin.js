@@ -33,7 +33,7 @@ userSchema.plugin(findOrCreate)
 const User = MongooseConnection.model('User', userSchema)
 
 const mongouri = `${mongoCloudAddress}/${DB_NAME}`
-console.log("mognouri=", mongouri);
+console.log("mongouri=", mongouri);
 const sessionStore = mongostore.create({ mongoUrl: mongouri, collectionName: 'sessions' })
 
 router.use(session({

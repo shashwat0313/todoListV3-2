@@ -24,10 +24,16 @@ router.get('/deletelist', (req, res) => {
 
                 if (list) {
                     // console.log("list found = ", list);
-                    List.findByIdAndRemove(list._id).then(() => {
-                        User.findByIdAndUpdate(user._id, { $pull: { Lists: list._id } }).then((updatedUser) => {
-                            // console.log("this is the updated user doc:", updatedUser);
-                            res.redirect('/');
+                    const itemIds = list.Items
+                    Item.deleteMany({ _id: { $in: itemIds } }).then(() => {
+                        List.findByIdAndRemove(list._id).then(() => {
+                            User.findByIdAndUpdate(user._id, { $pull: { Lists: list._id } }).then((updatedUser) => {
+                                // console.log("this is the updated user doc:", updatedUser);
+                                res.redirect('/');
+                            }).catch((err) => {
+                                console.log("error-", err);
+                                return res.send(err)
+                            })
                         }).catch((err) => {
                             console.log("error-", err);
                             return res.send(err)
