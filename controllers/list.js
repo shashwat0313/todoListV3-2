@@ -230,7 +230,7 @@ router.get('/', (req, res, next) => {
 
             }).catch((err) => {
                 // console.log("some internal error");
-                return res.send("some error - ", err)
+                return res.send(err)
             })
         }
         else {
