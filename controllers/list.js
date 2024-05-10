@@ -25,9 +25,23 @@ router.get('/additem', (req, res)=>{
     
     checkauth(req).then((result)=>{
         console.log("checkauth result in additem", result);
-    })
 
-    res.redirect('/lists' + listName);
+        if(result.isLoggedIn){
+            User.findOne({email:result.email}).populate('Lists').then((user)=>{
+                const lists = user.Lists;
+                const list = lists.find(list => list.Name === listName); // Assuming 'Name' is the field you want to check
+
+                if(list){
+                    // found a list
+                    console.log("list=", list);
+                }
+
+            })
+        }
+
+    })  
+
+    res.redirect('/lists/' + listName);
 })
 
 // request made here to fetch a list or to create and empty list
