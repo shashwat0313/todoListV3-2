@@ -15,6 +15,12 @@ const User = new mongoose.model('user', userSchema)
 
 const passport = require('passport')
 
+router.get('/deleteitem',(req, res)=>{
+    console.log("req.query=", req.query);
+
+    res.redirect("/");
+
+})
 
 router.get('/additem', (req, res)=>{
     // const {listName} = req.params;
@@ -30,7 +36,7 @@ router.get('/additem', (req, res)=>{
             User.findOne({email:result.email}).populate('Lists').then((user)=>{
                 const lists = user.Lists;
                 console.log("user found by additem-", user);
-                const list = lists.find(list => list.ListName === listName); // Assuming 'Name' is the field you want to check
+                const list = lists.find(list => list.ListName === listName);
 
                 if(list){
                     // found a list
@@ -101,43 +107,43 @@ router.get('/:listName', (req, res) => {
 })
 
 // request made here to add an item to the list
-router.post('/:listName', (req, res) => {
-    const newTaskName = req.body.task
-    const listName = req.params.listName
-    console.log("listName=", listName);
-    console.log("new task name = ", newTaskName);
-    console.log("req(post)=", req);
-    checkauth(req).then((x) => {
-        console.log("checkauth res=", x);
-        if (x.isLoggedIn) {
-            User.findOne({ email: x.email }).populate("Lists").then((user) => {
-                console.log("user=", user);
-                const lists = user.Lists
-                const listExists = lists.some(list => list.ListName === listName);
-                if (listExists) {
-                    List.findOne({ ListName: listName }).then((listToBeUpdated) => {
-                        console.log("list found:", listToBeUpdated);
-                        Item.create({ Name: newTaskName }).then((newItem) => {
-                            listToBeUpdated.Items.push(newItem._id)
-                            listToBeUpdated.save().then((updatedList) => {
-                                console.log("updated list after pushing an item is - ", updatedList);
-                                return res.redirect('/lists/' + listName)
-                            })
-                        })
-                    })
-                }
-                else{
-                    console.log("could not find list");
-                }
-            })
-        }
-        else{
-            console.log("user not logged in");
-            return res.send("checkauth returned false")
-        }
-    })
+// router.post('/:listName', (req, res) => {
+//     const newTaskName = req.body.task
+//     const listName = req.params.listName
+//     console.log("listName=", listName);
+//     console.log("new task name = ", newTaskName);
+//     console.log("req(post)=", req);
+//     checkauth(req).then((x) => {
+//         console.log("checkauth res=", x);
+//         if (x.isLoggedIn) {
+//             User.findOne({ email: x.email }).populate("Lists").then((user) => {
+//                 console.log("user=", user);
+//                 const lists = user.Lists
+//                 const listExists = lists.some(list => list.ListName === listName);
+//                 if (listExists) {
+//                     List.findOne({ ListName: listName }).then((listToBeUpdated) => {
+//                         console.log("list found:", listToBeUpdated);
+//                         Item.create({ Name: newTaskName }).then((newItem) => {
+//                             listToBeUpdated.Items.push(newItem._id)
+//                             listToBeUpdated.save().then((updatedList) => {
+//                                 console.log("updated list after pushing an item is - ", updatedList);
+//                                 return res.redirect('/lists/' + listName)
+//                             })
+//                         })
+//                     })
+//                 }
+//                 else{
+//                     console.log("could not find list");
+//                 }
+//             })
+//         }
+//         else{
+//             console.log("user not logged in");
+//             return res.send("checkauth returned false")
+//         }
+//     })
 
-})
+// })
 
 
 
