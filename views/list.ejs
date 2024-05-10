@@ -19,7 +19,7 @@
       <input type="hidden" name="listName" value="<%= dayvalue %>">
       <% for( let index = 0; index < taskArray.length; index++ ) { %>
       <div class="item">
-        <input id="itemcheckbox" type="checkbox" name="item" onchange="this.form.submit()" value="<%=taskArray[index]%>">
+        <input id="itemcheckbox" type="checkbox" name="item" onchange="this.preventDefault(); this.form.submit()" value="<%=taskArray[index]%>">
         <!-- <input type="hidden" name="listName" value="<%= routeName %>"> -->
         <p id="itemtext">
           <%= taskArray[index] %>
