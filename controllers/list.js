@@ -20,7 +20,14 @@ router.get('/additem', (req, res)=>{
     // const {listName} = req.params;
     // console.log(req.params);
     console.log(req.query);
-    const newTaskName = "";
+    const newTaskName = req.query.task;
+    const listName = req.query.list
+    
+    checkauth(req).then((result)=>{
+        console.log("checkauth result in additem", result);
+    })
+
+    res.redirect('/lists' + listName);
 })
 
 // request made here to fetch a list or to create and empty list
