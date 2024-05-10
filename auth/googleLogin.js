@@ -37,7 +37,7 @@ userSchema.plugin(findOrCreate)
 const db_enc_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_ENCKEY), 0,32)
 const db_signing_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_SIGNING_KEY), 0,64)
 
-userSchema.plugin(mongooseEncryption, {encryptionKey:db_enc_key,signingKey:db_signing_key})
+userSchema.plugin(mongooseEncryption, {encryptionKey:db_enc_key,signingKey:db_signing_key, excludeFromEncryption:['_id', '__v']})
 
 const User = MongooseConnection.model('User', userSchema)
 
