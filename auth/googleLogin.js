@@ -18,8 +18,6 @@ const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
 const mongooseEncryption = require('mongoose-encryption')
 
-// const db_encryption_key = Buffer.from(process.env.DB_ENCKEY, 'hex')
-// const db_signing_key = Buffer.from(process.env.DB_SIGNING_KEY, 'hex')
 const clientID = process.env.GOOGLE_CLIENT_ID
 const clientSECRET = process.env.GOOGLE_CLIENT_SECRET
 const client = new OAuth2Client(clientID);
@@ -33,6 +31,12 @@ const MongooseConnection = mongoose.createConnection(`${mongoCloudAddress}/${DB_
 
 const userSchema = require('../schemas/User')
 userSchema.plugin(findOrCreate)
+
+// ENCRYPTION LAYER
+
+const db_enc_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_ENCKEY), 0,32)
+const db_signing_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_SIGNING_KEY), 0,64)
+
 // userSchema.plugin(mongooseEncryption, {encryptionKey:})
 
 const User = MongooseConnection.model('User', userSchema)
@@ -140,6 +144,8 @@ router.post('/googleonetap', (req, res, next) => {
 })
 
 router.get('/test',(req, res)=>{
+    console.log("enckey=", db_enc_key);
+    console.log("sigkey=", db_signing_key)
     console.log("hit on googlelogin test");
     res.send("hello from googlelogin")
 })
