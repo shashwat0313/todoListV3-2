@@ -29,7 +29,8 @@ router.get('/additem', (req, res)=>{
         if(result.isLoggedIn){
             User.findOne({email:result.email}).populate('Lists').then((user)=>{
                 const lists = user.Lists;
-                const list = lists.find(list => list.Name === listName); // Assuming 'Name' is the field you want to check
+                console.log("user found by additem");
+                const list = lists.find(list => list.ListName === listName); // Assuming 'Name' is the field you want to check
 
                 if(list){
                     // found a list
