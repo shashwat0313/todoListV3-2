@@ -8,6 +8,8 @@ const itemSchema = require('../schemas/Task')
 const userSchema = require('../schemas/User')
 const { update } = require('lodash')
 
+const mongooseEncryption = require('mongoose-encryption')
+
 const db_enc_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_ENCKEY), 0,32)
 const db_signing_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_SIGNING_KEY), 0,64)
 
