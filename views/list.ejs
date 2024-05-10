@@ -16,7 +16,7 @@
   <form action="/lists/deleteitem" method="get">
 
     <div class="box taskContainer" style="overflow-y:hidden;">
-      <input type="hidden" name="listName" value="<%= routeName %>">
+      <input type="hidden" name="listName" value="<%= dayvalue %>">
       <% for( let index = 0; index < taskArray.length; index++ ) { %>
       <div class="item">
         <input id="itemcheckbox" type="checkbox" name="item" onchange="this.form.submit()" value="<%=taskArray[index]%>">

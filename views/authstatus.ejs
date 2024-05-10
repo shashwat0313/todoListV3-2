@@ -1,7 +1,7 @@
 <div id="authbutton"></div>
 
 <div style="color:white" id="authstatus">
-    Not Logged In
+    Checking
 </div>
 
 <script>
@@ -24,6 +24,7 @@
                 authstatusdiv.textContent = result.email;
                 authbutton.innerHTML = '<a href="/accounts/googlelogin/signout">Logout</a>';
             } else {
+              authstatusdiv.textContent = 'Not Logged In'
                 authbutton.innerHTML = '<a href="/accounts/login">Login</a>';
             }
           })
