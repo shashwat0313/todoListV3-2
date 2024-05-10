@@ -16,10 +16,13 @@ const GoogleOneTapStrategy = require("passport-google-one-tap").GoogleOneTapStra
 const customStrategy = require('passport-custom').Strategy
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
-const clientID = process.env.GOOGLE_CLIENT_ID || "1041261791254-mbtvjmn3kep32isbfr7mn6v2fp99ibu8.apps.googleusercontent.com"
-const clientSECRET = process.env.GOOGLE_CLIENT_SECRET || "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";
+const mongooseEncryption = require('mongoose-encryption')
+
+const db_secret_key = process.env.DB_ENCKEY
+const clientID = process.env.GOOGLE_CLIENT_ID
+const clientSECRET = process.env.GOOGLE_CLIENT_SECRET
 const client = new OAuth2Client(clientID);
-const scopes = ['www.googleapis.com/auth/userinfo.email', 'www.googleapis.com/auth/userinfo.profile']
+// const scopes = ['www.googleapis.com/auth/userinfo.email', 'www.googleapis.com/auth/userinfo.profile']
 const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -29,6 +32,7 @@ const MongooseConnection = mongoose.createConnection(`${mongoCloudAddress}/${DB_
 
 const userSchema = require('../schemas/User')
 userSchema.plugin(findOrCreate)
+userSchema.plugin(mongooseEncryption, {secret:db_secret_key})
 
 const User = MongooseConnection.model('User', userSchema)
 
