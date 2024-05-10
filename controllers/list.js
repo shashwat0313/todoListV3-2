@@ -15,37 +15,79 @@ const User = new mongoose.model('user', userSchema)
 
 const passport = require('passport')
 
-router.get('/deleteitem',(req, res)=>{
+router.get('/deleteitem', (req, res) => {
     console.log("req.query=", req.query);
+    const { item, listName } = req.query
 
-    res.redirect("/");
+    checkauth(req).then((result) => {
+        if (result.isLoggedIn) {
+            User.findOne({ email: result.email }).populate('Lists').then((user) => {
+                const lists = user.Lists;
+                console.log("user found by additem-", user);
+                const list = lists.find(list => list.ListName === listName);
 
+                if (list) {
+                    // found a list
+                    console.log("list=", list);
+                    List.findById(list.id).populate("Items").then((listToBeUpdated) => {
+                        console.log("this list is to be updated:", listToBeUpdated);
+
+                        let items = listToBeUpdated.Items
+                        const itemToRemove = items.find((i) => i.Name === item)
+
+                        if (itemToRemove) {
+                            Item.findByIdAndRemove(itemToRemove._id).then(() => {
+                                    // Remove the item's ID from the list's items array
+                                    List.findByIdAndUpdate(list.id, { $pull: { Items: itemToRemove._id } }).then((updatedList) => {
+                                        console.log("new list=", updatedList);
+
+                                        res.redirect('/lists/' + listName)
+
+                                    })
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                    // Handle the case where an error occurred
+                                });
+                        }
+                    })
+                }
+            })
+        }
+        else {
+            res.send("not authenticated")
+        }
+
+        res.redirect("/");
+    }
+
+    )
 })
 
-router.get('/additem', (req, res)=>{
+router.get('/additem', (req, res) => {
     // const {listName} = req.params;
     // console.log(req.params);
     console.log(req.query);
     const newTaskName = req.query.task;
     const listName = req.query.list
-    
-    checkauth(req).then((result)=>{
+
+    checkauth(req).then((result) => {
         console.log("checkauth result in additem", result);
 
-        if(result.isLoggedIn){
-            User.findOne({email:result.email}).populate('Lists').then((user)=>{
+        if (result.isLoggedIn) {
+            User.findOne({ email: result.email }).populate('Lists').then((user) => {
                 const lists = user.Lists;
                 console.log("user found by additem-", user);
                 const list = lists.find(list => list.ListName === listName);
 
-                if(list){
+                if (list) {
                     // found a list
                     console.log("list=", list);
-                    List.findById(list.id).then((listToBeUpdated)=>{
+                    List.findById(list.id).then((listToBeUpdated) => {
                         console.log("this list is to be updated:", listToBeUpdated);
-                        Item.create({Name:newTaskName}).then((newitem)=>{
+                        Item.create({ Name: newTaskName }).then((newitem) => {
                             listToBeUpdated.Items.push(newitem._id);
-                            listToBeUpdated.save().then((updatedList)=>{
+                            listToBeUpdated.save().then((updatedList) => {
                                 // the list should have been updated by now
                                 console.log("updatedlist=", updatedList);
 
@@ -56,14 +98,14 @@ router.get('/additem', (req, res)=>{
                         })
                     })
                 }
-                else{
+                else {
                     console.log("some issue with listfind");
                 }
 
             })
         }
-        
-    })  
+
+    })
 
 })
 
@@ -99,7 +141,7 @@ router.get('/:listName', (req, res) => {
                 }
             })
         }
-        else{
+        else {
             console.log("not authenticated");
         }
     })
