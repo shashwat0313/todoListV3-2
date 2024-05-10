@@ -34,14 +34,14 @@ router.get('/additem', (req, res)=>{
                 if(list){
                     // found a list
                     console.log("list=", list);
+                    res.redirect('/lists/' + listName);
                 }
 
             })
         }
-
+        
     })  
 
-    res.redirect('/lists/' + listName);
 })
 
 // request made here to fetch a list or to create and empty list
