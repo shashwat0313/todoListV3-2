@@ -15,6 +15,13 @@ const User = new mongoose.model('user', userSchema)
 
 const passport = require('passport')
 
+
+router.get('/:listName/:additem', (req, res)=>{
+    const {listName, additem} = req.params;
+    console.log(req.params);
+})
+
+// request made here to fetch a list or to create and empty list
 router.get('/:listName', (req, res) => {
     const listName = req.params.listName
     // const isAuthenticated = req.isAuthenticated();
@@ -53,6 +60,7 @@ router.get('/:listName', (req, res) => {
 
 })
 
+// request made here to add an item to the list
 router.post('/:listName', (req, res) => {
     const newTaskName = req.body.task
     const listName = req.params.listName
@@ -90,6 +98,8 @@ router.post('/:listName', (req, res) => {
     })
 
 })
+
+
 
 router.get('/', (req, res, next) => {
 

@@ -28,12 +28,15 @@
       <% } %>
   </form>
   </div>
-
+<!-- will decide a get api to handle addition of tasks to make things simpler -->
   <div class="box addingTask">
-    <form class="addTaskForm" action="<%= routeName %>" method="post" class="item">
+    <form class="addTaskForm" action="" method="get" class="item" id="addtaskform">
 
-      <input class="textbox" type="text" name="task" placeholder="New Task" autocomplete="off">
-      <button type="submit" name="list" value=<%=dayvalue%>>+</button>
+      <input class="textbox" type="text" name="task" placeholder="New Task" autocomplete="off" id="newtaskname">
+      <button type="submit" name="list" value=<%=dayvalue%> onclick="
+      const x = <%= routeName %> + '/' + document.getElementById('newtaskname').value
+      console.log('x=', x, '\n');
+      ;document.getElementById('addtaskform').setAttribute('action', x)">+</button>
 
     </form>
   </div>
@@ -60,6 +63,10 @@
     z.addEventListener("mouseout", () => {
       z.style.overflowY = 'hidden';
     })
+
+    // will now add scripts to handle form submissions via get
+
+
   </script>
 </body>
 <br>
