@@ -153,8 +153,8 @@ router.get('/test',(req, res)=>{
 router.get('/querylogin', (req, res) => {
     // console.log("req.user=", req.user);
     // console.log("inside querylogin get route");
-    console.log("enckey=", db_enc_key);
-    console.log("sigkey=", db_signing_key)
+    // console.log("enckey=", db_enc_key);
+    // console.log("sigkey=", db_signing_key)
     if (req.isAuthenticated()) {
 
         res.json({
