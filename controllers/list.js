@@ -15,6 +15,29 @@ const User = new mongoose.model('user', userSchema)
 
 const passport = require('passport')
 
+router.get('/deletelist', (req, res)=>{
+    const {listName} = req.query;
+
+    console.log("req.query(deletelist)");
+
+    checkauth(req).then((result)=>{
+        if(result.isLoggedIn){
+            User.findOne({email:result.email}).populate("Lists").then((user)=>{
+                const lists = user.Lists;
+                const list = lists.find(list => list.ListName === listName);
+
+                if(list){
+
+                }
+                else{
+                    res.send("list not found (deletelist)")
+                }
+            })
+        }
+    })
+
+})
+
 router.get('/deleteitem', (req, res) => {
     console.log("req.query=", req.query);
     const { item, listName } = req.query
@@ -40,8 +63,7 @@ router.get('/deleteitem', (req, res) => {
                                     // Remove the item's ID from the list's items array
                                     List.findByIdAndUpdate(list.id, { $pull: { Items: itemToRemove._id } }).then((updatedList) => {
                                         console.log("new list=", updatedList);
-
-                                        res.redirect('/lists/' + listName)
+                                        return res.redirect('/lists/' + listName)
 
                                     })
                                 })
@@ -55,12 +77,9 @@ router.get('/deleteitem', (req, res) => {
             })
         }
         else {
-            res.send("not authenticated")
+            return res.send("not authenticated")
         }
-
-        res.redirect("/");
     }
-
     )
 })
 
