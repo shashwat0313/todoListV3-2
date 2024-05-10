@@ -18,7 +18,7 @@ const passport = require('passport')
 router.get('/deletelist', (req, res)=>{
     const {listName} = req.query;
 
-    console.log("req.query(deletelist)");
+    console.log("req.query(deletelist)=", req.query);
 
     checkauth(req).then((result)=>{
         if(result.isLoggedIn){
