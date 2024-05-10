@@ -1,8 +1,9 @@
 //not using lodash in this project
 //does not handle database operation errors
 
-const mongoCloudAddress = "mongodb+srv://shashwat:pvA0u3cA7M5Jtx01@cluster0.gobnuc1.mongodb.net"
-const DB_NAME = 'todolistV3-2'
+require('dotenv').config();
+const mongoCloudAddress = process.env.MONGODB_DBADDRESS
+const DB_NAME = process.env.MONGODB_DBNAME
 const bodyParser = require('body-parser');
 const express = require('express');
 const { redirect } = require('express/lib/response');
@@ -16,7 +17,7 @@ const fetch = require('node-fetch');
 const accountsPrimary = require('./auth/accountsPrimary')
 const itemSchema = require("./schemas/Task")
 const ListSchema = require('./schemas/List')
-const userSchema = require('./schemas/User')
+const userSchema = require('./schemas/User') 
 const listRouter = require('./controllers/list')
 const checkauth = require('./auth/checkauth')
 //mongoose connection

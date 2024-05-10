@@ -1,7 +1,9 @@
 // TO DO 
 // GOOGLE OAUTH
-const mongoCloudAddress = "mongodb+srv://shashwat:pvA0u3cA7M5Jtx01@cluster0.gobnuc1.mongodb.net"
-const DB_NAME = 'todolistV3-2'
+require('dotenv').config();
+const mongoCloudAddress = process.env.MONGODB_DBADDRESS
+const DB_NAME = process.env.MONGODB_DBNAME
+console.log(DB_NAME);
 const express = require('express')
 const router = express.Router();
 const findOrCreate = require('mongoose-findorcreate')
@@ -14,8 +16,8 @@ const GoogleOneTapStrategy = require("passport-google-one-tap").GoogleOneTapStra
 const customStrategy = require('passport-custom').Strategy
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
-const clientID = "1041261791254-mbtvjmn3kep32isbfr7mn6v2fp99ibu8.apps.googleusercontent.com"
-const clientSECRET = "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";
+const clientID = process.env.GOOGLE_CLIENT_ID || "1041261791254-mbtvjmn3kep32isbfr7mn6v2fp99ibu8.apps.googleusercontent.com"
+const clientSECRET = process.env.GOOGLE_CLIENT_SECRET || "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";
 const client = new OAuth2Client(clientID);
 const scopes = ['www.googleapis.com/auth/userinfo.email', 'www.googleapis.com/auth/userinfo.profile']
 const bodyParser = require('body-parser');
@@ -24,14 +26,6 @@ router.use(bodyParser.urlencoded({ extended: true }));
 const MongooseConnection = mongoose.createConnection(`${mongoCloudAddress}/${DB_NAME}`)
 
 // order matters for most of the actions below. changing them may cause it to explode
-
-// const userSchema = new mongoose.Schema(
-//     {
-//         Name: String,
-//         email: String,
-//         cart: []
-//     }
-// )
 
 const userSchema = require('../schemas/User')
 userSchema.plugin(findOrCreate)
@@ -85,11 +79,6 @@ passport.use(
             User.findOrCreate({
                 email: (profile.emails[0].value),
                 Name: profile?.displayName ? `${profile.displayName}` : 'sorry got no name'
-                // Name: profile.name?.givenName + " " + profile.name.familyName
-            //     Name: (profile?.name ? `${profile.name?.givenName} ${profile.name?.familyName}` : 
-            //             (profile?.displayName ? `${profile.displayName}` : 'no name'
-            //         )
-            // )
             }).then((user) => {
                 return done(err, user);
             }).catch((err) => {
@@ -108,7 +97,7 @@ passport.use('custom', new customStrategy(
 
     (req, done) => {
         const userDetails = (jwt.decode(req.body.credential))
-
+        console.log(userDetails);
         User.findOrCreate({
             email: userDetails.email,
             Name: userDetails.given_name + " " + userDetails.family_name
@@ -149,8 +138,8 @@ router.get('/test',(req, res)=>{
 })
 
 router.get('/querylogin', (req, res) => {
-    console.log("req.user=", req.user);
-    console.log("inside querylogin get route");
+    // console.log("req.user=", req.user);
+    // console.log("inside querylogin get route");
     if (req.isAuthenticated()) {
 
         res.json({
@@ -159,7 +148,7 @@ router.get('/querylogin', (req, res) => {
         })
     }
     else {
-        console.log("nope");
+        // console.log("nope");
         res.json({
             isLoggedIn: null, 
             email: ""
@@ -173,7 +162,7 @@ router.get('/signout', (req, res) => {
             console.log(err);
         }
         else {
-            return res.redirect('/accounts/login')
+            return res.redirect('/')
         }
     })
 })
