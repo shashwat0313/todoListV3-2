@@ -19,6 +19,7 @@ const passport = require('passport')
 router.get('/:listName/:additem', (req, res)=>{
     const {listName, additem} = req.params;
     console.log(req.params);
+    console.log(req.query);
 })
 
 // request made here to fetch a list or to create and empty list

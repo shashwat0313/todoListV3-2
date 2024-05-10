@@ -34,7 +34,7 @@
 
       <input class="textbox" type="text" name="task" placeholder="New Task" autocomplete="off" id="newtaskname">
       <button type="submit" name="list" value=<%=dayvalue%> onclick="
-      const x = <%= routeName %> + '/' + document.getElementById('newtaskname').value
+      const x = '<%= routeName %>' + '/' + document.getElementById('newtaskname').value
       console.log('x=', x, '\n');
       ;document.getElementById('addtaskform').setAttribute('action', x)">+</button>
 
