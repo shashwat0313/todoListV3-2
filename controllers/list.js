@@ -231,12 +231,12 @@ router.get('/', (req, res, next) => {
         // console.log("check res=", result);
         if (result.isLoggedIn) {
             User.findOne({ email: result.email }).populate('Lists').then(user => {
-                // console.log("user found: " + user);
+                console.log("user found: " + user);
                 // console.log("lists=", user.Lists);
                 return res.render('manage', { ItemArray: user.Lists })
 
             }).catch((err) => {
-                // console.log("some internal error");
+                console.log("some internal error");
                 return res.send(err)
             })
         }
