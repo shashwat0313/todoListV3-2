@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const mongoCloudAddress = process.env.MONGODB_DBADDRESS
 const DB_NAME = process.env.MONGODB_DBNAME
 const bodyParser = require('body-parser');
