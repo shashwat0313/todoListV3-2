@@ -16,7 +16,7 @@ const GoogleOneTapStrategy = require("passport-google-one-tap").GoogleOneTapStra
 const customStrategy = require('passport-custom').Strategy
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
-const mongooseEncryption = require('mongoose-encryption')
+// const mongooseEncryption = require('mongoose-encryption')
 
 const clientID = process.env.GOOGLE_CLIENT_ID
 const clientSECRET = process.env.GOOGLE_CLIENT_SECRET
