@@ -1,3 +1,4 @@
+// !!! fix-before-deployement
 // require('dotenv').config();
 const mongoCloudAddress = process.env.MONGODB_DBADDRESS
 const DB_NAME = process.env.MONGODB_DBNAME
@@ -14,9 +15,10 @@ const fetch = require('node-fetch');
 const accountsPrimary = require('./auth/accountsPrimary')
 const listRouter = require('./controllers/list')
 const checkauth = require('./auth/checkauth')
+
+// !!! fix-before-deployement
 //mongoose connection
-mongoose.connect(`${mongoCloudAddress}/${DB_NAME}`).then((x) => {
-});
+mongoose.connect(`${mongoCloudAddress}/${DB_NAME}`).then((x) => {console.log('mongo connected');});
 /////////////////////////////////////////////////////////////////////////////////
 
 app.use(bodyParser.urlencoded({ extended: true }));
