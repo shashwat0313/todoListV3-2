@@ -57,6 +57,9 @@ router.get('/deletelist', (req, res) => {
                 console.error("error-", err);
             })
         }
+        else{
+            res.redirect('/accounts/login')
+        }
     })
 
 })
@@ -108,7 +111,8 @@ router.get('/deleteitem', (req, res) => {
             })
         }
         else {
-            return res.send("not authenticated")
+            // return res.send("not authenticated")
+            return res.redirect('/accounts/login')
         }
     }
     ).catch((err) => {
@@ -168,6 +172,8 @@ router.get('/additem', (req, res) => {
                 console.log("error-", err);
                 return res.send(err)
             })
+        }else{
+            return res.redirect('/accounts/login')
         }
 
     })
@@ -220,6 +226,7 @@ router.get('/:listName', (req, res) => {
         }
         else {
             console.log("not authenticated");
+            return res.redirect('/accounts/login');
         }
     })
 
