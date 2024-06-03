@@ -226,3 +226,9 @@ footer {
     color: white;
   }
 }
+
+@media screen and (max-width: 600px) {
+  #buttonDiv {
+    width: 75%;
+  }
+}
