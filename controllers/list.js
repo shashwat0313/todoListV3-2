@@ -8,6 +8,13 @@ const itemSchema = require('../schemas/Task')
 const userSchema = require('../schemas/User')
 const { update } = require('lodash')
 
+// const mongooseEncryption = require('mongoose-encryption')
+
+// const db_enc_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_ENCKEY), 0,32)
+// const db_signing_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_SIGNING_KEY), 0,64)
+
+// userSchema.plugin(mongooseEncryption, {encryptionKey:db_enc_key,signingKey:db_signing_key})
+
 const List = new mongoose.model('List', ListSchema)
 const Item = new mongoose.model('Item', itemSchema)
 const User = new mongoose.model('user', userSchema)
@@ -49,6 +56,9 @@ router.get('/deletelist', (req, res) => {
             }).catch((err) => {
                 console.error("error-", err);
             })
+        }
+        else{
+            res.redirect('/accounts/login')
         }
     })
 
@@ -101,7 +111,8 @@ router.get('/deleteitem', (req, res) => {
             })
         }
         else {
-            return res.send("not authenticated")
+            // return res.send("not authenticated")
+            return res.redirect('/accounts/login')
         }
     }
     ).catch((err) => {
@@ -161,6 +172,8 @@ router.get('/additem', (req, res) => {
                 console.log("error-", err);
                 return res.send(err)
             })
+        }else{
+            return res.redirect('/accounts/login')
         }
 
     })
@@ -213,6 +226,7 @@ router.get('/:listName', (req, res) => {
         }
         else {
             console.log("not authenticated");
+            return res.redirect('/accounts/login');
         }
     })
 
@@ -224,13 +238,13 @@ router.get('/', (req, res, next) => {
         // console.log("check res=", result);
         if (result.isLoggedIn) {
             User.findOne({ email: result.email }).populate('Lists').then(user => {
-                // console.log("user found: " + user);
+                console.log("user found: " + user);
                 // console.log("lists=", user.Lists);
                 return res.render('manage', { ItemArray: user.Lists })
 
             }).catch((err) => {
-                // console.log("some internal error");
-                return res.send("some error - ", err)
+                console.log("some internal error");
+                return res.send(err)
             })
         }
         else {

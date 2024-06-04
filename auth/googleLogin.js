@@ -16,10 +16,12 @@ const GoogleOneTapStrategy = require("passport-google-one-tap").GoogleOneTapStra
 const customStrategy = require('passport-custom').Strategy
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
-const clientID = process.env.GOOGLE_CLIENT_ID || "1041261791254-mbtvjmn3kep32isbfr7mn6v2fp99ibu8.apps.googleusercontent.com"
-const clientSECRET = process.env.GOOGLE_CLIENT_SECRET || "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";
+// const mongooseEncryption = require('mongoose-encryption')
+
+const clientID = process.env.GOOGLE_CLIENT_ID
+const clientSECRET = process.env.GOOGLE_CLIENT_SECRET
 const client = new OAuth2Client(clientID);
-const scopes = ['www.googleapis.com/auth/userinfo.email', 'www.googleapis.com/auth/userinfo.profile']
+// const scopes = ['www.googleapis.com/auth/userinfo.email', 'www.googleapis.com/auth/userinfo.profile']
 const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -29,6 +31,13 @@ const MongooseConnection = mongoose.createConnection(`${mongoCloudAddress}/${DB_
 
 const userSchema = require('../schemas/User')
 userSchema.plugin(findOrCreate)
+
+// ENCRYPTION LAYER
+
+// const db_enc_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_ENCKEY), 0,32)
+// const db_signing_key = Uint8Array.prototype.slice.call(Buffer.from(process.env.DB_SIGNING_KEY), 0,64)
+
+// userSchema.plugin(mongooseEncryption, {encryptionKey:db_enc_key,signingKey:db_signing_key, excludeFromEncryption:['_id', '__v']})
 
 const User = MongooseConnection.model('User', userSchema)
 
@@ -135,6 +144,8 @@ router.post('/googleonetap', (req, res, next) => {
 })
 
 router.get('/test',(req, res)=>{
+    // console.log("enckey=", db_enc_key);
+    // console.log("sigkey=", db_signing_key)
     console.log("hit on googlelogin test");
     res.send("hello from googlelogin")
 })
@@ -142,6 +153,8 @@ router.get('/test',(req, res)=>{
 router.get('/querylogin', (req, res) => {
     // console.log("req.user=", req.user);
     // console.log("inside querylogin get route");
+    // console.log("enckey=", db_enc_key);
+    // console.log("sigkey=", db_signing_key)
     if (req.isAuthenticated()) {
 
         res.json({

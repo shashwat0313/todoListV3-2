@@ -1,4 +1,4 @@
-<div id="authbutton"></div>
+<h3 id="authbutton" style="margin-bottom: 0.5em;"></h3>
 
 <div style="color:white" id="authstatus">
     Checking
@@ -24,7 +24,7 @@
                 authstatusdiv.textContent = result.email;
                 authbutton.innerHTML = '<a href="/accounts/googlelogin/signout">Logout</a>';
             } else {
-              authstatusdiv.textContent = 'Not Logged In'
+              authstatusdiv.textContent = 'Not Logged In (Please log in to use this app.)'
                 authbutton.innerHTML = '<a href="/accounts/login">Login</a>';
             }
           })

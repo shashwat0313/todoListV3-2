@@ -9,6 +9,7 @@ const customStrategy = require('passport-custom').Strategy
 
 const googleLogin = require('./googleLogin');
 const checkauth = require("./checkauth");
+const { result } = require("lodash");
 
 //setting up epxress
 const app = express();
@@ -26,11 +27,22 @@ router.get('/test',(req,res)=>{
 })
 
 router.get('/login', (req, res) => {
-    if(checkauth(req).isLoggedIn){
-        res.redirect('/')
-    }
-    else
-    res.render('login')
+
+    checkauth(req).then((result)=>{
+        if(result.isLoggedIn){
+            res.redirect('/')
+        }
+        else{
+            res.render('login')
+        }
+
+    })
+
+    // if(checkauth(req).isLoggedIn){
+    //     res.redirect('/')
+    // }
+    // else
+    // res.render('login')
 });
 
 module.exports = router
