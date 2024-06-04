@@ -9,6 +9,8 @@
 <div class="box listContainer" style="height:400px; padding-top: 8px;">
 
   <table style="width:100%; font-size: large;">
+
+    <!-- the below part will also have to be replicated by the javascript functions -->
     <% for( let index = 0; index < ItemArray.length; index++ ) { %>
 
     <tr style="height: 1rem;">
@@ -51,14 +53,56 @@
   x.addEventListener("focusout", () => {
     x.placeholder = 'New Task'
   })
-  let z = document.querySelector(".listContainer")
-  z.addEventListener("mouseover", () => {
-    z.style.overflowY = 'scroll'
-  })
-  z.addEventListener("mouseout", () => {
-    z.style.overflowY = 'hidden';
-  })
+
+  // let z = document.querySelector(".listContainer")
+  // z.addEventListener("mouseover", () => {
+  //   z.style.overflowY = 'scroll'
+  // })
+  // z.addEventListener("mouseout", () => {
+  //   z.style.overflowY = 'hidden';
+  // })
 </script>
+
+<!-- <script>
+
+  fetch("/accounts/googlelogin/querylogin").then((res) => {
+    console.log('res from querylogin: ' + res);
+    res.json().then((responseJSON) => {
+      if (!(responseJSON.isLoggedIn)) {
+        // if the user is not logged in, invoke the localstorage apis.
+        // if the localstorage has some content, and then the user clicks on the login button, then
+        // notify the user that their content will be wiped if the login is successful.
+
+        // localstorage list key naming scheme - list<serial number 1...n>
+        // localstorage list value's value - the list name
+
+        // localstorage task key naming scheme - task<serial number 1...n>
+        // localstorage task value's value - the task name
+
+        // this file will only manage the lists, and not the tasks. The tasks will be managed in the list.ejs file.
+
+        // will have to attach javascript functions to buttons/form elements to handle the addition/deletion of lists.
+
+        let listCount = 0;
+
+        // now count the number of lists
+        for (let i = 0; i < localStorage.length; i++) {
+          if (localStorage.key(i).includes('list')) {
+            listCount++;
+          }
+        }
+
+        // now display the lists
+        // we will have to replicate the list display part of the ejs file here
+        // then iterate over the localstorage to display the lists
+        
+
+      }
+    })
+  }).catch((err) => {
+    console.log("some error");
+  })
+</script> -->
 
 <%- include('footer') %>
 
