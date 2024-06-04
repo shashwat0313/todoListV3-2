@@ -29,6 +29,7 @@ h1 {
 
 .taskContainer{
   height: 400px;
+  overflow-y: auto;
 }
 
 
@@ -149,4 +150,8 @@ footer {
   height: fit-content;
   width: fit-content;
   background-color: white;
+}
+
+.listContainer {
+  overflow-y: auto;
 }
